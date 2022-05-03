@@ -12,8 +12,8 @@ const ViewBoxesWithColorAndText = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SignIn" component={SignInView} />
-        <Stack.Screen name="List" component={ListView} />
+        {/* <Stack.Screen name="SignIn" component={SignInView} /> */}
+        <Stack.Screen name="My Tickets" component={ListView} />
         <Stack.Screen name="Detail" component={DetailView} />
         <Stack.Screen name="Create" component={CreateView} />
       </Stack.Navigator>

@@ -53,7 +53,7 @@ const SignInView = ({navigation}) => {
         title="Login with Email"
         style={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={() => navigation.navigate('List')}
+        onPress={() => navigation.navigate('My Tickets')}
       />
     </View>
   );
