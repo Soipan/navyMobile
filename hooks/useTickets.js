@@ -2,10 +2,12 @@ import {useQuery} from 'react-query';
 import axios from 'axios';
 
 const fetchTickets = async () => {
-  const response = await axios.get(
-    'https://jsonplaceholder.typicode.com/posts',
-  );
-  return response.data;
+  try {
+    const {data} = await axios.get('https://navy-ecru.vercel.app/api/tickets');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const useTickets = () => useQuery('tickets', fetchTickets);

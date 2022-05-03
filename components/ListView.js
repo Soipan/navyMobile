@@ -1,39 +1,55 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
-import {Text, Card} from '@rneui/themed';
+import {View, ScrollView, StyleSheet, Image} from 'react-native';
+import {Text, Card, Button} from '@rneui/themed';
 import useTickets from '../hooks/useTickets';
 
+const showTickets = (tickets, navigation) => {
+  return tickets?.map((ticket, idx) => (
+    <Card key={idx} containerStyle={styles.cardContainer}>
+      <View style={styles.cardHead}>
+        <Card.Title>#{ticket.id}</Card.Title>
+        <View style={styles.user}>
+          <Image
+            style={styles.image}
+            resizeMode="cover"
+            source={{
+              uri: `https://avatars.dicebear.com/api/open-peeps/${
+                ticket?.user?.email || ''
+              }.png`,
+            }}
+          />
+          <Text style={styles.name}>{ticket.user.email}</Text>
+        </View>
+      </View>
+      <Card.Divider />
+
+      <Text style={styles.fonts} h4>
+        {ticket.title}
+      </Text>
+
+      <Text style={styles.fonts}>{ticket.description}</Text>
+      <Button
+        containerStyle={styles.buttonContainer}
+        title="View Ticket"
+        onPress={() => navigation.navigate('Detail', {ticket})}
+      />
+    </Card>
+  ));
+};
+
 const Tickets = ({navigation}) => {
-  const {tickets, isLoading, isSucess} = useTickets();
+  const {data: tickets, isLoading, isSuccess} = useTickets();
   return (
     <>
       <ScrollView>
         <View style={styles.container}>
-          {isLoading ? (
-            <Text>Loading...</Text>
-          ) : isSucess ? (
-            tickets?.map(ticket => (
-              <Card containerStyle={styles.cardContainer}>
-                <Card.Title>FONTS</Card.Title>
-                <Card.Divider />
-                <Text style={styles.fonts} h1>
-                  h1 Heading
-                </Text>
-                <Text style={styles.fonts} h2>
-                  h2 Heading
-                </Text>
-                <Text style={styles.fonts} h3>
-                  h3 Heading
-                </Text>
-                <Text style={styles.fonts} h4>
-                  h4 Heading
-                </Text>
-                <Text style={styles.fonts}>Normal Text</Text>
-              </Card>
-            ))
-          ) : (
-            <Text>Error Fetching Tickets</Text>
+          {isLoading && (
+            <React.Fragment>
+              <Text>Loading...</Text>
+            </React.Fragment>
           )}
+
+          {isSuccess && showTickets(tickets, navigation)}
         </View>
       </ScrollView>
     </>
@@ -66,6 +82,15 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginTop: 15,
+  },
+  cardHead: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
 });
 
