@@ -1,63 +1,23 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text, Input, Button, useTheme} from '@rneui/themed';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SignInView from './components/SignInView';
+import ListView from './components/ListView';
+import DetailView from './components/DetailView';
+import CreateView from './components/CreateView';
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: '50%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: '#4F46E5',
-  },
-  buttonContainer: {
-    width: 300,
-    marginHorizontal: 50,
-    marginVertical: 10,
-  },
-  email: {
-    width: 320,
-    marginHorizontal: 50,
-    marginTop: 40,
-  },
-  text: {
-    textAlignVertical: 'center',
-    marginVertical: 10,
-    width: 300,
-  },
-});
+const Stack = createNativeStackNavigator();
 
 const ViewBoxesWithColorAndText = () => {
-  const {
-    theme: {colors},
-  } = useTheme();
-
   return (
-    <>
-      <View style={styles.container}>
-        <Text style={styles.text} h4 h4Style={{color: colors?.grey4}}>
-          Welcome
-        </Text>
-        <Text style={styles.text} h3 h3Style={{color: colors?.grey4}}>
-          Navy School Ticketing System
-        </Text>
-        <Input
-          placeholder="Email"
-          containerStyle={styles.email}
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          returnKeyType="send"
-        />
-        <Button
-          title="Login with Email"
-          style={styles.button}
-          containerStyle={styles.buttonContainer}
-          onPress={() => {}}
-        />
-      </View>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="SignIn" component={SignInView} />
+        <Stack.Screen name="List" component={ListView} />
+        <Stack.Screen name="Detail" component={DetailView} />
+        <Stack.Screen name="Create" component={CreateView} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
